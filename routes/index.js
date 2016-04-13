@@ -8,6 +8,7 @@ function buildHtml(req) {
   // concatenate body string
   var css = '<link rel="stylesheet" type="text/css" href="style.css">';
   css += '<link rel="stylesheet" type="text/css" href="bootstrap.css">';
+  css += '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
 
   var declaration = '<!DOCTYPE html><html>';
   var header = '<header></header>';
@@ -26,6 +27,11 @@ function buildHtml(req) {
       body += ', ';
     }
   }
+
+  for (var i = 0; i < req.body.images.length; i++) {
+    body += "<img src='" + req.body.images[i] +"' />";
+  }
+  
 
   body += '</body>';
 
