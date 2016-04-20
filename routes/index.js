@@ -19,20 +19,21 @@ function buildHtml(req) {
   var coverImgURL = req.body.cover.replace(/\s/g, '/');
   console.log(coverImgURL);
   var landing = "<div class='landing' style='background-image: url(" + coverImgURL + ")'>";
+  landing += '<div class="header">'
   landing += ('<h1 class="title">' + req.body.title + '</h1>');
   landing += ('<h4 class="author">Written by: ');
   for (var i = 0; i < req.body.authors.length; i++) {
-    landing += (req.body.authors[i]);
-    if (i === req.body.authors.length - 1 || req.body.authors[i+1] == '') {
+    landing += req.body.authors[i];
+    if (i == req.body.authors.length - 1 || req.body.authors[i+1] == '') {
       landing += '</h4>';
       break;
     }
-
     else {
-      body += ', ';
+      landing += ', ';
     }
   }
-  landing += "</div>";
+  landing += "</div>" // close .header tag
+  landing += "</div>"; // close .landing tag
 
   body += landing;
 
