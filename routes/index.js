@@ -2,16 +2,17 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
+
 function buildHtml(req) {
 
   // concatenate header string
   // concatenate body string
-  var css = '<link rel="stylesheet" type="text/css" href="style.css">';
+  var css = '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
   css += '<link rel="stylesheet" type="text/css" href="bootstrap.css">';
   css += '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
 
   var declaration = '<!DOCTYPE html><html>';
-  var header = '<header></header>';
+  var header = '<header>' + css + '</header>';
   
   var body = '<body>';
   body += ('<h1>' + req.body.title + '</h1>');
