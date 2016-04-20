@@ -16,6 +16,7 @@ a {
 	background-size: cover; 
 }
 
+<<<<<<< Updated upstream
 .landing .header {
 	top: 50%;
 	left: 50%;
@@ -25,6 +26,8 @@ a {
 	padding: 30px;
 }
 
+=======
+>>>>>>> Stashed changes
 .landing .title {
 	text-align: center;
 }
