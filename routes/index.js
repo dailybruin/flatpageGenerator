@@ -7,20 +7,23 @@ function buildHtml(req) {
 
   // concatenate header string
   // concatenate body string
-  var css = '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
+  var css = '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
   css += '<link rel="stylesheet" type="text/css" href="bootstrap.css">';
-  css += '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
-
+  css += '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
   var declaration = '<!DOCTYPE html><html>';
   var header = '<header>' + css + '</header>';
   
   var body = '<body>';
-  body += ('<h1>' + req.body.title + '</h1>');
-  body += ('<h4>Written by: ');
+
+  var coverImgURL = req.body.cover.replace(/\s/g, '/');
+  console.log(coverImgURL);
+  var landing = "<div class='landing' style='background-image: url(" + coverImgURL + ")'>";
+  landing += ('<h1 class="title">' + req.body.title + '</h1>');
+  landing += ('<h4 class="author">Written by: ');
   for (var i = 0; i < req.body.authors.length; i++) {
-    body += (req.body.authors[i]);
+    landing += (req.body.authors[i]);
     if (i === req.body.authors.length - 1 || req.body.authors[i+1] == '') {
-      body += '</h4>';
+      landing += '</h4>';
       break;
     }
 
@@ -28,6 +31,9 @@ function buildHtml(req) {
       body += ', ';
     }
   }
+  landing += "</div>";
+
+  body += landing;
 
   for (var i = 0; i < req.body.images.length; i++) {
     body += "<img src='" + req.body.images[i] +"' />";
