@@ -7,9 +7,9 @@ function buildHtml(req) {
 
   // concatenate header string
   // concatenate body string
-  var css = '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
-  css += '<link rel="stylesheet" type="text/css" href="bootstrap.css">';
-  css += '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
+  var css = '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
+  css +='<link rel="stylesheet" type="text/css" href="bootstrap.css">';
+  css += '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
 
   var declaration = '<!DOCTYPE html><html>';
   var header = '<header>' + css + '</header>';
@@ -31,6 +31,11 @@ function buildHtml(req) {
 
   for (var i = 0; i < req.body.images.length; i++) {
     body += "<img src='" + req.body.images[i] +"' />";
+  }
+
+  for (var i = 0; i < req.body.paragraphs.length; i++){
+    body += "<p>" + req.body.paragraphs[i] + "</p>";
+    body += "<div class='linebreak'></div>";
   }
   
 
