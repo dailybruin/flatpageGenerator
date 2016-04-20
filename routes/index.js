@@ -17,10 +17,12 @@ function buildHtml(req) {
   var body = '<body>';
 
   var coverImgURL = req.body.cover.replace(/\s/g, '/');
-  console.log(coverImgURL);
   var landing = "<div class='landing' style='background-image: url(" + coverImgURL + ")'>";
   landing += '<div class="header">'
+  // Title
   landing += ('<h1 class="title">' + req.body.title + '</h1>');
+  landing += "<hr>";
+  // Author
   landing += ('<h4 class="author">Written by: ');
   for (var i = 0; i < req.body.authors.length; i++) {
     landing += req.body.authors[i];
@@ -32,13 +34,16 @@ function buildHtml(req) {
       landing += ', ';
     }
   }
+  
+  // Get subhead
+  landing += '<h6 class="subhead">' + req.body.subheading + "</h6>";
   landing += "</div>" // close .header tag
   landing += "</div>"; // close .landing tag
 
   body += landing;
 
   for (var i = 0; i < req.body.images.length; i++) {
-    body += "<img src='" + req.body.images[i] +"' />";
+    body += "<div class='story-photo-right'><img src='" + req.body.images[i] +"' /></div>";
   }
 
   for (var i = 0; i < req.body.paragraphs.length; i++){
