@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
     $(".btn").click(function(event){
     	var numImages=0;
@@ -22,3 +23,4 @@ $(document).ready(function() {
     	}
     }); 
 });
+*/

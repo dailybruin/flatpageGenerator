@@ -24,18 +24,32 @@ block content
 								input(class='form-control', type='text', name='authors')
 						br
 						div(class='form-group')
-							label(class='col-xs-3 control-label') Images
+							label(class='col-xs-3 control-label') Main Images
 							div(class='col-xs-8')
-								input(class='form-control', type='text', name='images', required)
+								input(type='file', name='mainImages', required)
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='images')
+								input(type='file', name='mainImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='images')
+								input(type='file', name='mainImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='images')
+								input(type='file', name='mainImages')
+						br
+						div(class='form-group')
+							label(class='col-xs-3 control-label') Side Images
+							div(class='col-xs-8')
+								input(type='file', name='sideImages', required)
+						div(class='form-group')
+							div(class='col-xs-offset-3 col-xs-8')
+								input(type='file', name='sideImages')
+						div(class='form-group')
+							div(class='col-xs-offset-3 col-xs-8')
+								input(type='file', name='sideImages')
+						div(class='form-group')
+							div(class='col-xs-offset-3 col-xs-8')
+								input(type='file', name='sideImages')
 						br
 						div(class='form-group')
 							label(class='col-xs-3 control-label') Title
@@ -84,16 +98,16 @@ block content
 						div(class='form-group')
 							label(class='col-xs-3 control-label') Paragraphs
 							div(class='col-xs-8')
-								input(class='form-control', type='text', name='paragraphs', required)
+								textarea(name='paragraphs', cols='90', rows='8')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='paragraphs')
+								textarea(name='paragraphs', cols='90', rows='8')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='paragraphs')
+								textarea(name='paragraphs', cols='90', rows='8')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='paragraphs')
+								textarea(name='paragraphs', cols='90', rows='8')
 
 						button(class='btn btn-lg btn-primary btn-block', type='submit') Generate Flatpage
 							span.clearfix
