@@ -119,6 +119,16 @@ font-size:1.3vmax;
 	text-align: center;
 }
 
+.pullquote-right p {
+	color: black;
+	line-height: 90%;
+	font-weight: bold;
+	font-size: 26px;
+	font-style: italic;
+	margin-top: 20px;
+	text-align: center;
+}
+
 #text_near_images {
 	padding-top: 20px;
 	padding-bottom: 20px; 

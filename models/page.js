@@ -11,5 +11,6 @@ module.exports = mongoose.model('Page', {
 	mainImageCaptions: Array,
 	sideImageCaptions: Array,
 	quotes: Array,
+	quoteMakers: Array,
 	paragraphs: Array
 });

@@ -55,6 +55,8 @@ function buildHtml(req) {
       quotes++;
   }
 
+  var quoters = quotes;
+
   var sImages = 0;
   for (var k = 0; k < req.body.sideImages.length; k++) {
     if (req.body.sideImages[k] == '')
@@ -78,26 +80,18 @@ function buildHtml(req) {
 
   var left = false;
 
-  console.log("lower bound is: " + ((sections/2)-1));
+  //console.log("lower bound is: " + ((sections/2)-1));
 
   var totalParas = 0;
-  if (sections <= 3) {
-    for (var k = 0; k < sections; k++) {
-      var para = req.body.paragraphs[k].split(/\r?\n/);
-      totalParas += para.length;
-    }
+
+  for (var k = 0; k < sections; k++) {
+    var para = req.body.paragraphs[k].split(/\r?\n/);
+    totalParas += para.length;
   }
 
-  else {
-    for (var k = 1; k < sections-1; k++) {
-      var para = req.body.paragraphs[k].split(/\r?\n/);
-      totalParas += para.length;
-    }
-  }
-
-  var parasPerSideImage = Math.floor(totalParas/sImages);
-  var parasPerQuote = Math.floor(totalParas/quotes);
+  var parasPerSide = Math.floor(totalParas/(sImages+quotes));
   var parasPassed = 0;
+  var imageNext = true;
 
   for (var k = 0; k < sections; k++) {
     if (((sections <= 3 && k > 0) || (k >= ((sections/2)-1)))  && mImages > 0) {
@@ -117,64 +111,88 @@ function buildHtml(req) {
 
     for (var i = 0; i < paras.length; i++) {
       body += '<p>' + paras[i] + '</p>';
-      
-      /*
-      if ((i == Math.floor((paras.length / 2))) && sImages > 0) {
-        if (left) {
-          body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.captions[captions-1] + '</p></div></div>';
-          left = false;
-        }
 
-        else {
-          body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.captions[captions-1] + '</p></div></div>';          
-          left = true;
-        }
+      //if ((sections <= 3) || (k > 0 && k < sections-1)) {
+        if ((parasPassed % parasPerSide == 0)) {
+          if (imageNext) {
+            if (sImages > 0) {       
+              if (left) {
+                body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';
+                left = false;
+              }
 
-        captions--;
-        sImages--;
-      }
-      */
+              else {
+                body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';          
+                left = true;
+              }
 
-      if ((sections <= 3) || (k > 0 && k < sections-1)) {
-        if ((parasPassed % parasPerSideImage == 0) && sImages > 0) {
-          if (left) {
-            body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';
-            left = false;
+              sImages--;
+              sCaptions--;
+            }
+
+            else if (quotes > 0) {
+              if (left) {
+                body += '<div class="pullquote"><p>' + req.body.quotes[quotes-1] + '</p>';
+                body += '<p><cite>' + req.body.quoteMakers[quoters-1] + '</cite></p></div>';
+                left = false;
+              }
+
+              else {
+                body += '<div class="pullquote-right"><p>' + req.body.quotes[quotes-1] + '</p>';
+                body += '<p><cite>' + req.body.quoteMakers[quoters-1] + '</cite></p></div>';
+                left = true;
+              }
+              quotes--;
+              quoters--;
+            }
+
+            imageNext = false;
           }
 
           else {
-            body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';          
-            left = true;
-          }
+            if (quotes > 0) {
+              if (left) {
+                body += '<div class="pullquote"><p>' + req.body.quotes[quotes-1] + '</p>';
+                body += '<p><cite>' + req.body.quoteMakers[quoters-1] + '</cite></p></div>';
+                left = false;
+              }
 
-          sCaptions--;
-          sImages--;
+              else {
+                body += '<div class="pullquote-right"><p>' + req.body.quotes[quotes-1] + '</p>';
+                body += '<p><cite>' + req.body.quoteMakers[quoters-1] + '</cite></p></div>';
+                left = true;
+              }
+              quotes--;
+              quoters--;
+            }
+
+            else if (sImages > 0) {
+              if (left) {
+                body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';
+                left = false;
+              }
+
+              else {
+                body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';          
+                left = true;
+              }
+
+              sImages--;
+              sCaptions--;
+            }
+
+            imageNext = true;
+          }
         }
-
-        /*
-        if (parasPassed % parasPerQuote == 0) {
-          if (left) {
-            body += '<div class="pullquote"><p>' + req.body.quotes[quotes-1] + '</p></div>';
-            left = false;
-          }
-
-          else {
-            body += '<div class="pullquote-right"><p>' + req.body.quotes[quotes-1] + '</p></div>';
-            left = true;
-          }
-
-          quotes--;
-        }
-        */
 
         parasPassed++;
-      }
+      //}
 
       if (i == paras.length - 1) {
-        //if (k != sections - 1)
+        if (k != sections - 1)
           body += '<div class="linebreak"></div></div></div></div>';
-        //else
-          //body += '</div></div></div>';
+        else
+          body += '</div></div></div>';
       }
     }
   }
@@ -200,6 +218,7 @@ router.post('/generate', function (req, res) {
   page.sideImageCaptions = req.body.sideImageCaptions;
   page.mainImageCaptions = req.body.mainImagesImageCaptions;
   page.quotes = req.body.quotes;
+  page.quoteMakers = req.body.quoteMakers;
   page.paragraphs = req.body.paragraphs;
   page.sideImages = req.body.sideImages;
   page.mainImages = req.body.mainImages;
