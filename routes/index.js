@@ -5,7 +5,6 @@ var Page = require('../models/page');
 var mkdirp = require('mkdirp');
 
 function buildHtml(req) {
-  console.log(req.body);
   // concatenate header string
   // concatenate body string
   var css = '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
@@ -37,7 +36,7 @@ function buildHtml(req) {
 
   header += '<p style="font-weight: bold">' + authors + '</p>';
   header += '<p style="font-family: Sans-Serif; line-height: 140%; font-weight: light">' + req.body.subheading + '</p>'
-  header += '</div></div><p class="caption_content" style="float: right; margin-right: 10px;">(Photo by Aubrey Yeo/Daily Bruin Senior Staff)</p>';
+  header += '</div></div><p class="caption_content" style="float: right; margin-right: 10px;">' + req.body.coverCaption + '</p>';
   header += '</header>';
 
   var sections = 0;
@@ -56,27 +55,126 @@ function buildHtml(req) {
       quotes++;
   }
 
-  var sImages = req.body.sideImages.length;
-  var mImages = req.body.mainImages.length;
+  var sImages = 0;
+  for (var k = 0; k < req.body.sideImages.length; k++) {
+    if (req.body.sideImages[k] == '')
+      break;
+    else
+      sImages++;
+  }
 
-  var captions = sImages + mImages; //already known they're the same
+  var mImages = 0;
+  for (var k = 0; k < req.body.mainImages.length; k++) {
+    if (req.body.mainImages[k] == '')
+      break;
+    else
+      mImages++;
+  }
+
+  var sCaptions = sImages;
+  var mCaptions = mImages;
 
   var body = '<body>';
 
+  var left = false;
+
+  console.log("lower bound is: " + ((sections/2)-1));
+
+  var totalParas = 0;
+  if (sections <= 3) {
+    for (var k = 0; k < sections; k++) {
+      var para = req.body.paragraphs[k].split(/\r?\n/);
+      totalParas += para.length;
+    }
+  }
+
+  else {
+    for (var k = 1; k < sections-1; k++) {
+      var para = req.body.paragraphs[k].split(/\r?\n/);
+      totalParas += para.length;
+    }
+  }
+
+  var parasPerSideImage = Math.floor(totalParas/sImages);
+  var parasPerQuote = Math.floor(totalParas/quotes);
+  var parasPassed = 0;
+
   for (var k = 0; k < sections; k++) {
+    if (((sections <= 3 && k > 0) || (k >= ((sections/2)-1)))  && mImages > 0) {
+      body += '<div class="row">';
+      body += '<div class="parallax-window" data-parallax="scroll" data-image-src="' + req.body.mainImages[mImages-1] + '"></div>';
+      body += '<p class="caption_content" style="float: right;">' + req.body.mainImageCaptions[mCaptions-1] + '</p>';
+      body += '</div>';
+      mCaptions--;
+      mImages--;
+    }
+
     body += '<div class="row"><div class="large-6 large-centered columns"><div class="content">';
-    if (k == 0)
-      body += '<br><br>';
+    //if (k == 0)
+      //body += '<br><br>';
 
     var paras = req.body.paragraphs[k].split(/\r?\n/);
 
     for (var i = 0; i < paras.length; i++) {
       body += '<p>' + paras[i] + '</p>';
+      
+      /*
+      if ((i == Math.floor((paras.length / 2))) && sImages > 0) {
+        if (left) {
+          body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.captions[captions-1] + '</p></div></div>';
+          left = false;
+        }
+
+        else {
+          body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.captions[captions-1] + '</p></div></div>';          
+          left = true;
+        }
+
+        captions--;
+        sImages--;
+      }
+      */
+
+      if ((sections <= 3) || (k > 0 && k < sections-1)) {
+        if ((parasPassed % parasPerSideImage == 0) && sImages > 0) {
+          if (left) {
+            body += '<div class="block_photo_left"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_left"><p class="caption_left">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';
+            left = false;
+          }
+
+          else {
+            body += '<div class="block_photo_right"><img src="' + req.body.sideImages[sImages-1] + '" class="photo"><div class="caption_right"><p class="caption_right">' + req.body.sideImageCaptions[sCaptions-1] + '</p></div></div>';          
+            left = true;
+          }
+
+          sCaptions--;
+          sImages--;
+        }
+
+        /*
+        if (parasPassed % parasPerQuote == 0) {
+          if (left) {
+            body += '<div class="pullquote"><p>' + req.body.quotes[quotes-1] + '</p></div>';
+            left = false;
+          }
+
+          else {
+            body += '<div class="pullquote-right"><p>' + req.body.quotes[quotes-1] + '</p></div>';
+            left = true;
+          }
+
+          quotes--;
+        }
+        */
+
+        parasPassed++;
+      }
+
       if (i == paras.length - 1) {
-        if (k != sections - 1)
-          body += '<div class="linebreak"></div></div></div></div></div>';
-        else
-          body += '</div></div></div>';
+        //if (k != sections - 1)
+          body += '<div class="linebreak"></div></div></div></div>';
+        //else
+          //body += '</div></div></div>';
       }
     }
   }
@@ -97,8 +195,10 @@ router.post('/generate', function (req, res) {
   page.authors = req.body.authors;
   page.title = req.body.title;
   page.coverPhoto = req.body.cover;
+  page.coverPhotoCaption = req.body.coverCaption;
   page.subheading = req.body.subheading;
-  page.captions = req.body.captions;
+  page.sideImageCaptions = req.body.sideImageCaptions;
+  page.mainImageCaptions = req.body.mainImagesImageCaptions;
   page.quotes = req.body.quotes;
   page.paragraphs = req.body.paragraphs;
   page.sideImages = req.body.sideImages;
@@ -115,7 +215,7 @@ router.post('/generate', function (req, res) {
     var html = buildHtml(req);
     stream.end(html);
     //res.end(html);
-    res.render('dashboard');
+    res.redirect('/');
   });
 });
 

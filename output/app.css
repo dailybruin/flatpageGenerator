@@ -101,6 +101,14 @@ font-size:1.3vmax;
 	margin: 10px 15px 0px -200px;
 }
 
+.pullquote-right {
+	float: right;
+	width: 250px;
+	background: url("img/pullquote.png");
+	padding: 13px;
+	margin: 10px -200px 0px 15px;
+}
+
 .pullquote p {
 	color: black;
 	line-height: 90%;
