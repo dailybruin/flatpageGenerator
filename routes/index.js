@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-
+var Page = require('../models/page.js');
 
 function buildHtml(req) {
 
@@ -60,6 +60,16 @@ function buildHtml(req) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('dashboard');
+});
+
+/* GET saved pages */
+router.get('/all', function(req, res) {
+    var pages;
+    Page.find(function (err, pages) {
+      if (err) return console.error(err);
+      console.log(pages);
+      res.render('all', { pages : pages } );
+    })
 });
 
 router.post('/generate', function (req, res) {

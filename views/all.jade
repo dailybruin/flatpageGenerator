@@ -1,0 +1,115 @@
+block content
+	each page in pages
+		button
+			p= page.authors
+			p= page.sideImages
+			p= page.mainImages
+			p= page.title
+			p= page.coverPhoto
+			p= page.subheading
+			p= page.captions
+			p= page.quotes
+			p= page.paragraphs
+			p= page.id
+			hr
+
+		form(class='form-horizontal', action='/update', method='POST')
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Authors
+				div(class='col-xs-8')
+					input(class='form-control', type='text', value=page.authors, name='authors', required, autofocus)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='authors')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='authors')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='authors')
+			br
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Main Images
+				div(class='col-xs-8')
+					input(type='file', name='mainImages', value=page.mainImages, required)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='mainImages')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='mainImages')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='mainImages')
+			br
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Side Images
+				div(class='col-xs-8')
+					input(type='file', name='sideImages', value=page.sideImages, required)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='sideImages')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='sideImages')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(type='file', name='sideImages')
+			br
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Title
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='title', value=page.title, required)
+
+			br
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Cover photo
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='cover', value=page.coverPhoto, required)
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Subheading
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='subheading', value=page.subheading, required)
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Captions
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='captions', value=page.captions, required)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='captions')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='captions')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='captions')
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Quotes
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='quotes', value=page.quotes)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quotes')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quotes')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quotes')
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Paragraphs
+				div(class='col-xs-8')
+					textarea(name='paragraphs', cols='90', rows='8')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					textarea(name='paragraphs', cols='90', rows='8')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					textarea(name='paragraphs', cols='90', rows='8')
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					textarea(name='paragraphs', cols='90', rows='8')
