@@ -6,8 +6,11 @@ module.exports = mongoose.model('Page', {
 	mainImages: Array,
 	title: String,
 	coverPhoto: String,
+	coverPhotoCaption: String,
 	subheading: String,
-	captions: Array,
+	mainImageCaptions: Array,
+	sideImageCaptions: Array,
 	quotes: Array,
+	quoteMakers: Array,
 	paragraphs: Array
 });

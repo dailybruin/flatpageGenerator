@@ -6,9 +6,12 @@ block content
 			p= page.mainImages
 			p= page.title
 			p= page.coverPhoto
+			p= page.coverCaption
 			p= page.subheading
-			p= page.captions
+			p= page.mainImageCaptions
+			p= page.sideImageCaptions
 			p= page.quotes
+			p= page.quoteMakers
 			p= page.paragraphs
 			p= page.id
 			hr
@@ -17,44 +20,44 @@ block content
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Authors
 				div(class='col-xs-8')
-					input(class='form-control', type='text', value=page.authors, name='authors', required, autofocus)
+					input(class='form-control', type='text', name='authors', value=page.authors[0], required, autofocus)
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='authors')
+					input(class='form-control', type='text', name='authors', value=page.authors[1])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='authors')
+					input(class='form-control', type='text', name='authors', value=page.authors[2])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='authors')
+					input(class='form-control', type='text', name='authors', value=page.authors[3])
 			br
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Main Images
 				div(class='col-xs-8')
-					input(type='file', name='mainImages', value=page.mainImages, required)
+					input(class='form-control', type='text', name='mainImages', value=page.mainImages[0], autofocus)
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='mainImages')
+					input(class='form-control', type='text', name='mainImages', value=page.mainImages[1])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='mainImages')
+					input(class='form-control', type='text', name='mainImages', value=page.mainImages[2])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='mainImages')
+					input(class='form-control', type='text', name='mainImages', value=page.mainImages[3])
 			br
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Side Images
 				div(class='col-xs-8')
-					input(type='file', name='sideImages', value=page.sideImages, required)
+					input(class='form-control', type='text', name='sideImages', value=page.sideImages[0], autofocus)
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='sideImages')
+					input(class='form-control', type='text', name='sideImages', value=page.sideImages[1])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='sideImages')
+					input(class='form-control', type='text', name='sideImages', autofocus, value=page.sideImages[2])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(type='file', name='sideImages')
+					input(class='form-control', type='text', name='sideImages', autofocus, value=page.sideImages[3])
 			br
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Title
@@ -68,37 +71,70 @@ block content
 					input(class='form-control', type='text', name='cover', value=page.coverPhoto, required)
 
 			div(class='form-group')
+				label(class='col-xs-3 control-label') Cover photo credit
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='coverCaption', value=page.coverCaption, required)
+
+			div(class='form-group')
 				label(class='col-xs-3 control-label') Subheading
 				div(class='col-xs-8')
 					input(class='form-control', type='text', name='subheading', value=page.subheading, required)
 
 			div(class='form-group')
-				label(class='col-xs-3 control-label') Captions
+				label(class='col-xs-3 control-label') Main Image Credits
 				div(class='col-xs-8')
-					input(class='form-control', type='text', name='captions', value=page.captions, required)
+					input(class='form-control', type='text', name='mainImageCaptions', value=page.mainImageCaptions[0], required)
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='captions')
+					input(class='form-control', type='text', name='mainImageCaptions', value=page.mainImageCaptions[1])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='captions')
+					input(class='form-control', type='text', name='mainImageCaptions', value=page.mainImageCaptions[2])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='captions')
+					input(class='form-control', type='text', name='mainImageCaptions', value=page.mainImageCaptions[3])
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Side Image Captions
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='sideImageCaptions', value=page.sideImageCaptions[0], required)
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='sideImageCaptions', value=page.sideImageCaptions[1])
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='sideImageCaptions', value=page.sideImageCaptions[2])
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='sideImageCaptions', value=page.sideImageCaptions[3])
 
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Quotes
 				div(class='col-xs-8')
-					input(class='form-control', type='text', name='quotes', value=page.quotes)
+					input(class='form-control', type='text', name='quotes', value=page.quotes[0])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='quotes')
+					input(class='form-control', type='text', name='quotes', value=page.quotes[1])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='quotes')
+					input(class='form-control', type='text', name='quotes', value=page.quotes[2])
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
-					input(class='form-control', type='text', name='quotes')
+					input(class='form-control', type='text', name='quotes', value=page.quotes[3])
+
+			div(class='form-group')
+				label(class='col-xs-3 control-label') Quote Attribute
+				div(class='col-xs-8')
+					input(class='form-control', type='text', name='quoteMakers', value=page.quoteMakers[0])
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quoteMakers', value=page.quoteMakers[1])
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quoteMakers', value=page.quoteMakers[2])
+			div(class='form-group')
+				div(class='col-xs-offset-3 col-xs-8')
+					input(class='form-control', type='text', name='quoteMakers', value=page.quoteMakers[3])
 
 			div(class='form-group')
 				label(class='col-xs-3 control-label') Paragraphs
@@ -113,3 +149,6 @@ block content
 			div(class='form-group')
 				div(class='col-xs-offset-3 col-xs-8')
 					textarea(name='paragraphs', cols='90', rows='8')
+
+			button(class='btn btn-lg btn-primary btn-block', type='submit') Generate Flatpage
+				span.clearfix
