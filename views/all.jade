@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	div.all-pages
+		each page in pages
+			div.page-block.col-md-3.lead
+				p
+					| Title: 
+					=page.title
+
+				a(class='btn btn-default update-btn' href='/update/' + page.id) Update

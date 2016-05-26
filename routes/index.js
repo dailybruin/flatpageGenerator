@@ -9,7 +9,7 @@ function buildHtml(req) {
   // concatenate body string
   var css = '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css">';
   //css += '<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">';
-  css += '<link rel="stylesheet" type="text/css" href="app.css"';
+  css += '<link rel="stylesheet" type="text/css" href="../app.css"';
 
   var declaration = '<!DOCTYPE html><html>';
   var head = '<meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="icon" type="image/png" href="http://dailybruin.com/img/favicons/favicon-32x32.png" sizes="32x32">' + css + '</head>';
@@ -197,7 +197,7 @@ function buildHtml(req) {
     }
   }
   
-  var scripts = '<script src="jquery.min.js"></script><script src="parallax.min.js"></script><script src="what-input.min.js"></script><script src="foundation.min.js"></script><script src="/app.js"></script>';
+  var scripts = '<script src="../jquery.min.js"></script><script src="../parallax.min.js"></script><script src="../what-input.min.js"></script><script src="../foundation.min.js"></script><script src="../app.js"></script>';
   body += scripts + '</body>';
 
   return declaration + head + header + body;
@@ -216,7 +216,7 @@ router.post('/generate', function (req, res) {
   page.coverPhotoCaption = req.body.coverCaption;
   page.subheading = req.body.subheading;
   page.sideImageCaptions = req.body.sideImageCaptions;
-  page.mainImageCaptions = req.body.mainImagesImageCaptions;
+  page.mainImageCaptions = req.body.mainImageCaptions;
   page.quotes = req.body.quotes;
   page.quoteMakers = req.body.quoteMakers;
   page.paragraphs = req.body.paragraphs;
@@ -229,12 +229,91 @@ router.post('/generate', function (req, res) {
       }
   });
 
-  var stream = fs.createWriteStream('output/flatpage.html');
+  var folderName = req.body.title.replace(/ /g,'');
+
+  mkdirp('features/' + folderName, function(err) { 
+    if (err) {
+      console.log("Error creating folder");
+      res.redirect('/');
+    }
+  });
+
+  var stream = fs.createWriteStream('features/' + folderName + '/flatpage.html');
   stream.once('open', function(fd) {
     var html = buildHtml(req);
     stream.end(html);
     //res.end(html);
+    //res.download("output/flatpage.html");
     res.redirect('/');
+  });
+});
+
+router.get('/', function(req, res, next) {
+  res.render('dashboard');
+});
+
+/* GET saved pages */
+router.get('/all', function(req, res) {
+    var pages;
+    Page.find(function (err, pages) {
+      if (err) return console.error(err);
+      res.render('all', { pages : pages } );
+    });
+});
+
+/* GET saved pages */
+router.get('/update/:id', function (req, res) {
+  var pageID = req.params.id.replace(".html", "");
+  var page;
+  Page.findOne({_id: pageID}, function(err, page) {
+    if (err) return console.error(err);
+    console.log(page);
+    res.render('update', { page : page } );
+  });
+});
+
+router.post('/submit-update', function (req, res) {
+  // Find specific page
+  var page;
+  var pageID = req.body.pageID;
+  console.log(req.body);
+  Page.findOne({_id: pageID}, function(err, page) {
+    if (err) return console.error(err);
+    console.log(page);
+    // Update page contents
+    page.authors = req.body.authors;
+    page.title = req.body.title;
+    page.coverPhoto = req.body.cover;
+    page.coverPhotoCaption = req.body.coverCaption;
+    page.subheading = req.body.subheading;
+    page.sideImageCaptions = req.body.sideImageCaptions;
+    page.mainImageCaptions = req.body.mainImageCaptions;
+    page.quotes = req.body.quotes;
+    page.quoteMakers = req.body.quoteMakers;
+    page.paragraphs = req.body.paragraphs;
+    page.sideImages = req.body.sideImages;
+    page.mainImages = req.body.mainImages;
+
+    page.save(function (err) {
+        if (err) {
+          res.render('error', {error: err});
+        }
+    });
+    // update the output html file
+    var folderName = req.body.title.replace(/ /g,'');
+    var stream = fs.createWriteStream('features/' + folderName + '/flatpage.html');
+    stream.once('open', function(fd) {
+      var html = buildHtml(req);
+      stream.end(html);
+    });
+
+    // redirect after saving updated page
+    console.log(page);
+    var pages;
+    Page.find(function (err, pages) {
+      if (err) return console.error(err);
+      res.render('all', { pages : pages } );
+    });
   });
 });
 

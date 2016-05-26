@@ -1,7 +1,10 @@
 extends layout
 
 block content
-	h2.text-center Create your flatpage
+	h2.text-center Create your Flatpage
+	h2.text-center OR
+	h2.text-center 
+		a(href='/all') Update a previously created flatpage
 	br
 
 	div.container
@@ -26,7 +29,7 @@ block content
 						div(class='form-group')
 							label(class='col-xs-3 control-label') Main Images
 							div(class='col-xs-8')
-								input(class='form-control', type='text', name='mainImages', autofocus)
+								input(class='form-control', type='text', name='mainImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
 								input(class='form-control', type='text', name='mainImages')
@@ -40,16 +43,16 @@ block content
 						div(class='form-group')
 							label(class='col-xs-3 control-label') Side Images
 							div(class='col-xs-8')
-								input(class='form-control', type='text', name='sideImages', autofocus)
+								input(class='form-control', type='text', name='sideImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
 								input(class='form-control', type='text', name='sideImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='sideImages', autofocus)
+								input(class='form-control', type='text', name='sideImages')
 						div(class='form-group')
 							div(class='col-xs-offset-3 col-xs-8')
-								input(class='form-control', type='text', name='sideImages', autofocus)
+								input(class='form-control', type='text', name='sideImages')
 						br
 						div(class='form-group')
 							label(class='col-xs-3 control-label') Title
