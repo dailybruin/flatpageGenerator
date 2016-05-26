@@ -212,7 +212,6 @@ router.get('/all', function(req, res) {
     var pages;
     Page.find(function (err, pages) {
       if (err) return console.error(err);
-      console.log(pages);
       res.render('all', { pages : pages } );
     });
 });
@@ -251,12 +250,10 @@ router.post('/update', function (req, res) {
   // Find specific page
   var page;
   var pageID = req.body.ID;
-  console.log(pageID);
 
   Page.findOne({_id: pageID}, function(err, page) {
     if (err) return console.error(err);
-    console.log(req.body);
-    console.log(page);
+ 
     // Update page contents
     page.authors = req.body.authors;
     page.title = req.body.title;
