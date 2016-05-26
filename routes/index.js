@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var router = express.Router();
 var fs = require('fs');
 var Page = require('../models/page');
@@ -216,6 +217,16 @@ router.get('/all', function(req, res) {
     });
 });
 
+/* GET saved pages */
+router.get('/update/:id', function (req, res) {
+  var pageID = req.params.id;
+  var page;
+  Page.findOne({_id: pageID}, function(err, page) {
+    if (err) return console.error(err);
+    res.render('update', { page : page } );
+  });
+});
+
 router.post('/generate', function (req, res) {
   var page = new Page();
   page.authors = req.body.authors;
@@ -246,7 +257,7 @@ router.post('/generate', function (req, res) {
   });
 });
 
-router.post('/update', function (req, res) {
+router.post('/submit-update', function (req, res) {
   // Find specific page
   var page;
   var pageID = req.body.ID;
