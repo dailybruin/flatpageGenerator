@@ -214,7 +214,7 @@ router.get('/all', function(req, res) {
       if (err) return console.error(err);
       console.log(pages);
       res.render('all', { pages : pages } );
-    })
+    });
 });
 
 router.post('/generate', function (req, res) {
@@ -245,6 +245,53 @@ router.post('/generate', function (req, res) {
     //res.end(html);
     res.redirect('/');
   });
+});
+
+router.post('/update', function (req, res) {
+  // Find specific page
+  var page;
+  var pageID = req.body.ID;
+  console.log(pageID);
+
+  Page.findOne({_id: pageID}, function(err, page) {
+    if (err) return console.error(err);
+    console.log(req.body);
+    console.log(page);
+    // Update page contents
+    page.authors = req.body.authors;
+    page.title = req.body.title;
+    page.coverPhoto = req.body.cover;
+    page.coverPhotoCaption = req.body.coverCaption;
+    page.subheading = req.body.subheading;
+    page.sideImageCaptions = req.body.sideImageCaptions;
+    page.mainImageCaptions = req.body.mainImagesImageCaptions;
+    page.quotes = req.body.quotes;
+    page.quoteMakers = req.body.quoteMakers;
+    page.paragraphs = req.body.paragraphs;
+    page.sideImages = req.body.sideImages;
+    page.mainImages = req.body.mainImages;
+
+    page.save(function (err) {
+        if (err) {
+          res.render('error', {error: err});
+        }
+    });
+    // update the output html file
+    var stream = fs.createWriteStream('output/flatpage.html');
+    stream.once('open', function(fd) {
+      var html = buildHtml(req);
+      stream.end(html);
+    });
+
+    // redirect after saving updated page
+    console.log(page);
+    var pages;
+    Page.find(function (err, pages) {
+      if (err) return console.error(err);
+      res.render('all', { pages : pages } );
+    });
+  });
+  
 });
 
 module.exports = router;
