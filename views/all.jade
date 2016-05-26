@@ -1,18 +1,45 @@
 block content
 	each page in pages
 		button
-			p= page.authors
-			p= page.sideImages
-			p= page.mainImages
-			p= page.title
-			p= page.coverPhoto
-			p= page.coverCaption
-			p= page.subheading
-			p= page.mainImageCaptions
-			p= page.sideImageCaptions
-			p= page.quotes
-			p= page.quoteMakers
-			p= page.paragraphs
-			p= page.id
-		a(href='/update/{ page.id }.html') page.id Update
+			p 
+				| Title: 
+				=page.title
+			p
+				| Authors: 
+				=page.authors
+
+			p
+				| Cover Photo: 
+				=page.coverPhoto
+			p
+				| Cover Photo Caption: 
+				=page.coverCaption
+
+			p
+				| Main Images: 
+				=page.mainImages
+			p
+				| Main Image Caption: 
+				=page.mainImageCaptions
+
+			p
+				| Side Images: 
+				=page.sideImages
+			p
+				| Side Image Caption: 
+				=page.sideImageCaptions
+			p
+				| Subhead: 
+				=page.subheading
+			p
+				| Quotes: 
+				=page.quotes
+			p
+				| Quote Makers: 
+				=page.quoteMakers
+			p
+				| Text: 
+				=page.paragraphs
+
+		a(href='/update/' + page.id) Update
 		br

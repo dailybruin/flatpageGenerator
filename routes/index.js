@@ -219,15 +219,17 @@ router.get('/all', function(req, res) {
 
 /* GET saved pages */
 router.get('/update/:id', function (req, res) {
-  var pageID = req.params.id;
+  var pageID = req.params.id.replace(".html", "");
   var page;
   Page.findOne({_id: pageID}, function(err, page) {
     if (err) return console.error(err);
+    console.log(page);
     res.render('update', { page : page } );
   });
 });
 
 router.post('/generate', function (req, res) {
+  console.log(req.body);
   var page = new Page();
   page.authors = req.body.authors;
   page.title = req.body.title;
@@ -235,7 +237,7 @@ router.post('/generate', function (req, res) {
   page.coverPhotoCaption = req.body.coverCaption;
   page.subheading = req.body.subheading;
   page.sideImageCaptions = req.body.sideImageCaptions;
-  page.mainImageCaptions = req.body.mainImagesImageCaptions;
+  page.mainImageCaptions = req.body.mainImageCaptions;
   page.quotes = req.body.quotes;
   page.quoteMakers = req.body.quoteMakers;
   page.paragraphs = req.body.paragraphs;
@@ -260,11 +262,11 @@ router.post('/generate', function (req, res) {
 router.post('/submit-update', function (req, res) {
   // Find specific page
   var page;
-  var pageID = req.body.ID;
-
+  var pageID = req.body.pageID;
+  console.log(req.body);
   Page.findOne({_id: pageID}, function(err, page) {
     if (err) return console.error(err);
- 
+    console.log(page);
     // Update page contents
     page.authors = req.body.authors;
     page.title = req.body.title;
@@ -272,7 +274,7 @@ router.post('/submit-update', function (req, res) {
     page.coverPhotoCaption = req.body.coverCaption;
     page.subheading = req.body.subheading;
     page.sideImageCaptions = req.body.sideImageCaptions;
-    page.mainImageCaptions = req.body.mainImagesImageCaptions;
+    page.mainImageCaptions = req.body.mainImageCaptions;
     page.quotes = req.body.quotes;
     page.quoteMakers = req.body.quoteMakers;
     page.paragraphs = req.body.paragraphs;
