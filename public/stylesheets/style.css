@@ -59,3 +59,19 @@ a {
     padding-top: 10px;
     float: right;
 }*/
+
+.page-block {
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid navy;
+	font-size: 14px;
+}
+
+.update-btn {
+	width: 100%;
+	border-color: navy;
+}
+
+.pageID-input {
+	display: none;
+}

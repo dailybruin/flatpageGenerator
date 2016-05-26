@@ -1,45 +1,48 @@
+extends layout
+
 block content
-	each page in pages
-		button
-			p 
-				| Title: 
-				=page.title
-			p
-				| Authors: 
-				=page.authors
+	div.all-pages
+		each page in pages
+			div.page-block.col-md-3.lead
+				p
+					| Title: 
+					=page.title
+				p
+					| Authors: 
+					=page.authors
 
-			p
-				| Cover Photo: 
-				=page.coverPhoto
-			p
-				| Cover Photo Caption: 
-				=page.coverCaption
+				p
+					| Cover Photo: 
+					=page.coverPhoto
+				p
+					| Cover Photo Caption: 
+					=page.coverCaption
 
-			p
-				| Main Images: 
-				=page.mainImages
-			p
-				| Main Image Caption: 
-				=page.mainImageCaptions
+				p
+					| Main Images: 
+					=page.mainImages
+				p
+					| Main Image Caption: 
+					=page.mainImageCaptions
 
-			p
-				| Side Images: 
-				=page.sideImages
-			p
-				| Side Image Caption: 
-				=page.sideImageCaptions
-			p
-				| Subhead: 
-				=page.subheading
-			p
-				| Quotes: 
-				=page.quotes
-			p
-				| Quote Makers: 
-				=page.quoteMakers
-			p
-				| Text: 
-				=page.paragraphs
+				p
+					| Side Images: 
+					=page.sideImages
+				p
+					| Side Image Caption: 
+					=page.sideImageCaptions
+				p
+					| Subhead: 
+					=page.subheading
+				p
+					| Quotes: 
+					=page.quotes
+				p
+					| Quote Makers: 
+					=page.quoteMakers
+				p
+					| Text: 
+					=page.paragraphs
 
-		a(href='/update/' + page.id) Update
-		br
+				a(class='btn btn-default update-btn' href='/update/' + page.id) Update
+			

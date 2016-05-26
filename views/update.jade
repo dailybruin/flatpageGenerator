@@ -1,17 +1,7 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
+link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+
 block content
-	p= page.authors
-	p= page.sideImages
-	p= page.mainImages
-	p= page.title
-	p= page.coverPhoto
-	p= page.coverCaption
-	p= page.subheading
-	p= page.mainImageCaptions
-	p= page.sideImageCaptions
-	p= page.quotes
-	p= page.quoteMakers
-	p= page.paragraphs
-	p= page.id
 
 	form(class='form-horizontal', action='/submit-update', method='POST')
 		div(class='form-group')
@@ -151,9 +141,9 @@ block content
 				textarea(name='paragraphs', cols='90', rows='8')
 					| #{page.paragraphs[3]}
 
-		div(class='form-group')
+		div(class='form-group pageID-input')
 			div(class='col-xs-offset-3 col-xs-8')
 				input(class='form-control', type='text', name='pageID', value=page.id)
 
 
-		button(class='btn btn-lg btn-primary btn-block', type='submit') Update Page
+		button(class='btn btn-default btn-block', type='submit') Update Page
