@@ -1,4 +1,8 @@
-### Steps to run dev environment:
-1. `sudo mongod`
-2. `npm start`
-3. Go to `http://localhost:3000/`
+Steps to run dev environment:
+=============================
+1. ```sudo mongod```
+2. ```npm start```
+3. Go to ```http://localhost:3000/```
+
+Notes:
+- use ReactDOMServer.renderToStaticMarkup(element) to get HTML from React components
