@@ -1,0 +1,4 @@
+### Steps to run dev environment:
+1. `sudo mongod`
+2. `npm start`
+3. Go to `http://localhost:3000/`
