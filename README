@@ -1,6 +1,12 @@
+Steps to instlal dev environment:
+=================================
+1. brew install node
+2. brew install npm
+3. brew install mongodb
+
 Steps to run dev environment:
 =============================
-1. sudo mongod
+1. sudo mongod [--dbpath .]
 2. npm start
 3. Go to http://localhost:3000/
 
